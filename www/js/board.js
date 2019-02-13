@@ -6,19 +6,22 @@ var Board = function(boardEl, _gridsize) {
     boardSize: 0,
     cellSize: 0
   };
-  
-  
+
+
   /* Initialize board graphics */
   function init() {
     // Padding on board in %
-    var boardPadding = 0.1;
-    boardDimensions.cellSize = Math.floor( 
-      (1 - boardPadding) * window.innerWidth / gridsize 
+    var boardPadding = 0.15;
+    var largest_dimension = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+    boardDimensions.cellSize = Math.floor(
+      (1 - boardPadding) * largest_dimension / gridsize
     );
     boardDimensions.boardSize = boardDimensions.cellSize * gridsize;
-    boardEl.style.marginLeft = window.innerWidth * boardPadding / 2;
+    boardEl.style.marginLeft = (largest_dimension * boardPadding / 2 - gridsize * 5) + "px";
+    boardEl.style.width = largest_dimension + "px";
+    boardEl.style.height = largest_dimension + "px";
   }
-  
+
   /* Consider making this stateless? */
   function updateState(newState) {
     state = newState;
@@ -27,7 +30,7 @@ var Board = function(boardEl, _gridsize) {
   function getState() {
     return state;
   }
-  
+
   function render(state) {
     clearBoard();
     var board_state = state.board;
@@ -41,13 +44,13 @@ var Board = function(boardEl, _gridsize) {
     boardElements = domBoard;
     rendered = true;
   }
-  
+
   function clearBoard() {
     while (boardEl.firstChild) {
       boardEl.removeChild(boardEl.firstChild);
     }
   }
-  
+
   function buildCell(thisState, position, state) {
     if (rendered && !thisState && state[position]==thisState) return boardElements[position];
     var cell = document.createElement("div");
@@ -59,12 +62,12 @@ var Board = function(boardEl, _gridsize) {
     cell.style.display = "block";
     cell.style.visibility = "hidden";
     cell.onclick = function() {render();};
-    
+
     setTimeout(function() {
       cell.classList.add("animated");
       cell.classList.add("flipInX");
       cell.style.visibility = "visible";
-      
+
       if (thisState == "x") {
         var cross = document.createElement("div");
         cross.classList.add("cross");
@@ -73,7 +76,7 @@ var Board = function(boardEl, _gridsize) {
         cross.style.transform = "scale(10) rotate(45deg)";
         cell.append(cross);
       }
-      
+
       if (thisState == "o") {
         var cross = document.createElement("div");
         cross.classList.add("circle");
@@ -83,13 +86,13 @@ var Board = function(boardEl, _gridsize) {
         cell.append(cross);
       }
     }, 600*Math.random());
-    
-    
+
+
     return cell;
   }
-  
+
   init();
-  
+
   return {
     updateState: updateState,
     getState: getState,
