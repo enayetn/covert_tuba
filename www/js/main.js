@@ -22,12 +22,29 @@ function updateBoard(state) {
 }
 
 function makeMove(index) {
+  var thisBoard = game_state.board;
   // Should pass to server & bring back with updateBoard
   // How much local validation should also occur?
   var player_token = game_state.active_player==0 ? "x" : "o";
-  game_state.board[index] = player_token;
+
+  // Validate proper move
+  if (thisBoard[index]) {
+    shakeBoard();
+    return;
+  }
+
+  // Make move & swap player turn
+  thisBoard[index] = player_token;
   game_state.active_player = game_state.active_player==0 ? 1 : 0;
   game_board.render(game_state);
+}
+
+function shakeBoard() {
+  play_area.classList.remove("fadeIn");
+  play_area.classList.remove("shake");
+  setTimeout(function(){
+    play_area.classList.add("shake");
+  }, 50);
 }
 
 function GameState(board, active, winner) {
