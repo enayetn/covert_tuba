@@ -61,7 +61,8 @@ var Board = function(boardEl, _gridsize) {
     cell.classList.add("cell");
     cell.style.display = "block";
     cell.style.visibility = "hidden";
-    cell.onclick = function() {render();};
+    cell.dataset.index = position;
+    cell.onclick = function() {makeMove(this.dataset.index);};
 
     setTimeout(function() {
       cell.classList.add("animated");
