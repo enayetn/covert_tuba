@@ -27,7 +27,7 @@ var GridButton = function(gridSize) {
 
 var Button = function(title, callback) {
   var btn = document.createElement("button");
-  btn.classList.add("btn");
+  btn.classList.add("button");
   btn.onclick = callback;
   btn.innerText = title;
   return btn;

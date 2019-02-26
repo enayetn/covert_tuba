@@ -18,7 +18,7 @@ function startGame() {
 /* Probably will morph into a state manager of some sort */
 var game_state = new GameState();
 function updateBoard(state) {
-console.log("UPDATE BOARD", state);
+  console.log("UPDATE BOARD", state);
   state = JSON.parse(state);
   game_board.render(state);
   // Need to contemplate how state should mutate -- full replace? Or other options
@@ -39,9 +39,9 @@ function makeMove(index) {
 
   // Make move & swap player turn
   thisBoard[index] = player_token;
+  //game_state.active_player = game_state.active_player == 0 ? 1 : 0;
+  //game_board.render(game_state);
   playMove(index);
-  game_state.active_player = game_state.active_player==0 ? 1 : 0;
-  game_board.render(game_state);
 }
 
 function shakeBoard() {

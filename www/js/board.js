@@ -1,5 +1,5 @@
 var Board = function(boardEl, _gridsize) {
-  var gridsize = gridsize || 3;
+  var gridsize = _gridsize || 5;
   var boardElements;
   var rendered = false;
   var boardDimensions = {
@@ -30,7 +30,7 @@ var Board = function(boardEl, _gridsize) {
    *        - renderDelay {int} 
    */
   function render(state, renderOptions) {
-    log("RENDER CALLED");
+    log("RENDER CALLED", state);
     clearBoard();
     var board_state = state.board;
     var domBoard = board_state.map(buildCell);
@@ -88,6 +88,7 @@ var Board = function(boardEl, _gridsize) {
    * @return {DOMElement}         DOM Element representing marker
    */
   function generateMarker(player, cellSize) {
+    log("Inside generate marker", player);
     var marker = document.createElement("div");
     marker.style.left = getPixelSize(cellSize / 4);
     marker.style.top = getPixelSize(cellSize / 4);
